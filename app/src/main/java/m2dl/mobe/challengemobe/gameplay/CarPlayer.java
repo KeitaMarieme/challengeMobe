@@ -42,7 +42,7 @@ public class CarPlayer implements GameObject {
         this.positionX = positionX;
     }
 
-    private Rect position2Rect() {
+    public Rect position2Rect() {
         return new Rect(positionX,
                 Constants.SCREEN_HEIGHT - carBitmap.getHeight() - Y_OFFSET ,
                 positionX + carBitmap.getWidth(),

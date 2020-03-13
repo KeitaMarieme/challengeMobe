@@ -6,7 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-public class OrientationData implements SensorEventListener {
+public class GyroscopeEventListener implements SensorEventListener {
 
     private SensorManager manager;
     private Sensor accelerometer;
@@ -28,7 +28,7 @@ public class OrientationData implements SensorEventListener {
         startOrientation = null;
     }
 
-    public OrientationData() {
+    public GyroscopeEventListener() {
         manager = (SensorManager)Constants.CURRENT_CONTEXT.getSystemService(Context.SENSOR_SERVICE);
         accelerometer = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnometer = manager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
