@@ -24,13 +24,13 @@ public class MainActivity extends AppCompatActivity {
     private SensorEventListener sensorEventListener;
 
     private Sensor lightSensor;
-    private Sensor gyroscopeSensor;
+    private Sensor accelerometerSensor;
 
     private float lightValue;
     private float maxLightValue;
     private float mSpeedBackground;
-    private float gyroscopeValue;
-    private float maxGyroscopeValue;
+    private float accelerometerValue;
+    private float maxAccelerometerValue;
 
     private int screenWidth;
 
@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
         maxLightValue = (int) (lightSensor.getMaximumRange());
 
         /** INIT GYROSCOPE SENSOR **/
-        gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        if (gyroscopeSensor == null) {
-            Toast.makeText(this, "This device has no gyroscope!", Toast.LENGTH_SHORT);
+        accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        if (accelerometerSensor == null) {
+            Toast.makeText(this, "This device has no accelerometer!", Toast.LENGTH_SHORT);
             finish();
         }
-        maxGyroscopeValue = (int)gyroscopeSensor.getMaximumRange();
+        maxAccelerometerValue = (int)accelerometerSensor.getMaximumRange();
 
         sensorEventListener = new SensorEventListener() {
             @Override
@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
                         lightValue = sensorEvent.values[0];
                         mSpeedBackground = (lightValue / maxLightValue);
                         break;
-                    case Sensor.TYPE_GYROSCOPE :
-                        float x = sensorEvent.values[0];
+                    case Sensor.TYPE_ACCELEROMETER :
+                        float x = sensorEvent.values[0]*100 + carView.getWidth();
                         moveCar(x);
                         break;
                     default:
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         /** REGISTER SENSORS IN SENSOR MANAGER + EVENT LISTENER **/
-        sensorManager.registerListener(sensorEventListener, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(sensorEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
         initApp();
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(sensorEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(sensorEventListener, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -104,15 +104,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void moveCar(float sensedValuedOnx) {
         // TODO bouger la voiture sur l'axe des x
-        float xOnScreenScale;
-        float multiplicator = 10000;
-        float translationValue = sensedValuedOnx*multiplicator;
-        if ((translationValue + carView.getTranslationX()) > screenWidth) {
-            translationValue = screenWidth - (translationValue + carView.getTranslationX());
-        } else if ((translationValue + carView.getTranslationX()) < (-1 * screenWidth)) {
-            translationValue = translationValue + carView.getTranslationX() + screenWidth;
+        if (sensedValuedOnx > backgroundTwo.getWidth()) {
+            sensedValuedOnx = backgroundTwo.getWidth();
+        } else if (sensedValuedOnx < (-1 * backgroundTwo.getWidth())) {
+            sensedValuedOnx = (-1 * backgroundTwo.getWidth());
+        } else {
+            carView.setTranslationX(sensedValuedOnx);
         }
-        carView.setTranslationX(translationValue);
     }
 
     private void initApp() {
