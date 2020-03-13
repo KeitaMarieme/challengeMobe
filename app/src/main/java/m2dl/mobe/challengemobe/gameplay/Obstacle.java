@@ -29,8 +29,8 @@ public class Obstacle implements GameObject{
 
     }
 
-    public boolean playerCollide(CarPlayer player) {
-        Rect rect = player.position2Rect();
+    public boolean playerCollide(RectPlayer player) {
+        Rect rect = player.getRectangle();
         System.out.println("rect = " + rect.toString());
         return Rect.intersects(rectangle, rect)
                 || Rect.intersects(rectangle, rect);

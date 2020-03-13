@@ -33,7 +33,7 @@ public class ObstacleManager {
         populateObstacles();
     }
 
-    public boolean playerCollide(CarPlayer player) {
+    public boolean playerCollide(RectPlayer player) {
         for (Obstacle ob : obstacles) {
             if (ob.playerCollide(player))
                 return true;

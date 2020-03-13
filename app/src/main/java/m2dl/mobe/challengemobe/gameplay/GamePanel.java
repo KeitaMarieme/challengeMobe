@@ -20,7 +20,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         thread = new MainThread(getHolder(), this);
 
-        scene = new GamePlayScene(this);
+        scene = new GamePlayScene(context);
 
         setFocusable(true);
     }
