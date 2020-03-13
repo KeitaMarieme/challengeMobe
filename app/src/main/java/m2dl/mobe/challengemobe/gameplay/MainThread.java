@@ -3,9 +3,7 @@ package m2dl.mobe.challengemobe.gameplay;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
-/**
- * Created by Eric on 5/3/2017.
- */
+
 
 public class MainThread extends Thread{
     public static final int MAX_FPS = 60;

@@ -7,9 +7,6 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * Created by Eric on 5/15/2017.
- */
 
 public class ObstacleManager {
     //higher index is lower on screen is higher y value

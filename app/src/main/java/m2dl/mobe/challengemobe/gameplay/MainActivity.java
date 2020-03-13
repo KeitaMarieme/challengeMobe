@@ -1,10 +1,10 @@
 package m2dl.mobe.challengemobe.gameplay;
 
-        import android.app.Activity;
-        import android.os.Bundle;
-        import android.util.DisplayMetrics;
-        import android.view.Window;
-        import android.view.WindowManager;
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class MainActivity extends Activity {
 

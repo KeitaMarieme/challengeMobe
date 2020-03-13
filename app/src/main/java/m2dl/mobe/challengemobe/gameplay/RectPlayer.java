@@ -5,10 +5,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
-/**
- * Created by Eric on 5/4/2017.
- */
-
 public class RectPlayer implements GameObject {
 
     private Rect rectangle;

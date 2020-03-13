@@ -5,9 +5,6 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-/**
- * Created by Eric on 5/20/2017.
- */
 
 public class SceneManager {
     private ArrayList<Scene> scenes = new ArrayList<>();

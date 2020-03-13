@@ -1,4 +1,4 @@
-package m2dl.mobe.challengemobe;
+/**package m2dl.mobe.challengemobe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         /** INIT LIGHT SENSOR **/
+
+/**
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         if (lightSensor == null) {
             Toast.makeText(this, "The device has no light sensor!", Toast.LENGTH_SHORT);
@@ -67,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         maxLightValue = (int) (lightSensor.getMaximumRange());
 
         /** INIT GYROSCOPE SENSOR **/
+
+/**
         gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         if (gyroscopeSensor == null) {
             Toast.makeText(this, "This device has no gyroscope!", Toast.LENGTH_SHORT);
@@ -93,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
             public void onAccuracyChanged(Sensor sensor, int i) {
             }
         };
-        /** REGISTER SENSORS IN SENSOR MANAGER + EVENT LISTENER **/
+
+
+/**
         sensorManager.registerListener(sensorEventListener, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(sensorEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
         initApp();
@@ -154,3 +160,4 @@ public class MainActivity extends AppCompatActivity {
         return randomPoint;
     }
 }
+**/
