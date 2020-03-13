@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private float lightValue;
     private float maxLightValue;
-    private float gyroscopeValue;
+    private float[] gyroscopeValue;
     private float maxGyroscopeValue;
 
     @Override
@@ -69,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
                         accelerate(newValue);
                         break;
                     case Sensor.TYPE_GYROSCOPE :
+                        float x = sensorEvent.values[0];
+                        float y = sensorEvent.values[1];
+                        float z = sensorEvent.values[2];
+                        System.out.println("Gyroscope sensor value : " + x + " " + y + " " + z);
+                        moveCar(x);
                         break;
                     default:
                         break;
@@ -100,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void accelerate(float sensedValue) {
         // TODO accelerer le défilement
+    }
+
+    private void moveCar(float sensedValuedOnx) {
+        // TODO bouger la voiture sur l'axe des x
     }
 
     private void initApp() {
