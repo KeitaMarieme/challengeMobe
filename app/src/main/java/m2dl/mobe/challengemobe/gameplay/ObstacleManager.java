@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class ObstacleManager {
@@ -33,7 +32,7 @@ public class ObstacleManager {
         populateObstacles();
     }
 
-    public boolean playerCollide(RectPlayer player){
+    public boolean playerCollide(CarPlayer player){
         for(Obstacle ob: obstacles){
             if(ob.playerCollide(player))
                 return true;

@@ -13,7 +13,7 @@ public class GameplayScene implements Scene {
 
     private Rect r = new Rect();
 
-    private RectPlayer player;
+    private CarPlayer player;
     private Point playerPoint;
     private ObstacleManager obstacleManager;
 
@@ -26,7 +26,7 @@ public class GameplayScene implements Scene {
     private long frameTime;
 
     public GameplayScene() {
-        player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(255, 0, 0));
+        player = new CarPlayer(new Rect(100, 100, 200, 200), Color.rgb(255, 0, 0));
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, 3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
 
@@ -53,7 +53,7 @@ public class GameplayScene implements Scene {
     public void recieveTouch(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if(!gameOver && player.getRectangle().contains((int)event.getX(), (int)event.getY()))
+                if(!gameOver && player.getCarBitmap().contains((int)event.getX(), (int)event.getY()))
                     movingPlayer = true;
                 if(gameOver && System.currentTimeMillis() - gameOverTime >= 2000) {
                     reset();

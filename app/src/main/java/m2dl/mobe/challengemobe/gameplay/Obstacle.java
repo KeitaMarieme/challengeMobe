@@ -29,9 +29,9 @@ public class Obstacle implements GameObject{
         rectangle2 = new Rect(xStart+playerGap, yStart, Constants.SCREEN_WIDTH, yStart+rectHeight);
     }
 
-    public boolean playerCollide(RectPlayer player){
-        return Rect.intersects(rectangle, player.getRectangle())
-        || Rect.intersects(rectangle, player.getRectangle());
+    public boolean playerCollide(CarPlayer player){
+        return Rect.intersects(rectangle, player.getCarBitmap())
+        || Rect.intersects(rectangle, player.getCarBitmap());
     }
 
     public void draw(Canvas canvas){
