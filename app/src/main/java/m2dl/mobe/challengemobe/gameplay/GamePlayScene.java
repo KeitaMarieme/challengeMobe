@@ -4,9 +4,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
-import android.view.MotionEvent;
 
 import m2dl.mobe.challengemobe.R;
 
@@ -51,7 +49,7 @@ public class GamePlayScene {
         player.draw(canvas);
         obstacleManager.draw(canvas);
 
-        if(gameOver) {
+        if (gameOver) {
             Paint paint = new Paint();
             paint.setTextSize(100);
             paint.setColor(Color.MAGENTA);
@@ -60,30 +58,30 @@ public class GamePlayScene {
     }
 
     public void update() {
-        if(!gameOver) {
-            if(frameTime < Constants.INIT_TIME)
+        if (!gameOver) {
+            if (frameTime < Constants.INIT_TIME)
                 frameTime = Constants.INIT_TIME;
-            int elapsedTime = (int)(System.currentTimeMillis() - frameTime);
+            int elapsedTime = (int) (System.currentTimeMillis() - frameTime);
             frameTime = System.currentTimeMillis();
-            if(gyroscopeEventListener.getOrientation() != null && gyroscopeEventListener.getStartOrientation() != null) {
+            if (gyroscopeEventListener.getOrientation() != null && gyroscopeEventListener.getStartOrientation() != null) {
                 float pitch = gyroscopeEventListener.getOrientation()[1] - gyroscopeEventListener.getStartOrientation()[1];
                 float roll = gyroscopeEventListener.getOrientation()[2] - gyroscopeEventListener.getStartOrientation()[2];
 
-                float xSpeed = 2 * roll * Constants.SCREEN_WIDTH/1000f;
-                float ySpeed = pitch * Constants.SCREEN_HEIGHT/1000f;
+                float xSpeed = 2 * roll * Constants.SCREEN_WIDTH / 1000f;
+                float ySpeed = pitch * Constants.SCREEN_HEIGHT / 1000f;
 
-                carXPosition += Math.abs(xSpeed*elapsedTime) > 5 ? xSpeed*elapsedTime : 0;
+                carXPosition += Math.abs(xSpeed * elapsedTime) > 5 ? xSpeed * elapsedTime : 0;
             }
 
-            if(carXPosition < 0)
+            if (carXPosition < 0)
                 carXPosition = 0;
-            else if(carXPosition > Constants.SCREEN_WIDTH)
+            else if (carXPosition > Constants.SCREEN_WIDTH)
                 carXPosition = Constants.SCREEN_WIDTH;
 
-            player.update(carXPosition);
+            player.update(500);
             obstacleManager.update();
 
-            if(obstacleManager.playerCollide(player)) {
+            if (obstacleManager.playerCollide(player)) {
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
             }

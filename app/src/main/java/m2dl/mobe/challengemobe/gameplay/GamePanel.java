@@ -2,12 +2,11 @@ package m2dl.mobe.challengemobe.gameplay;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 
-public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
+public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
 
     private GamePlayScene scene;
@@ -42,11 +41,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
-        while(retry) {
+        while (retry) {
             try {
                 thread.setRunning(false);
                 thread.join();
-            } catch(Exception e) {e.printStackTrace();}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             retry = false;
         }
     }

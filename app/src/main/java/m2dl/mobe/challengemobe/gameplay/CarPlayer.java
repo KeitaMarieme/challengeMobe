@@ -2,8 +2,8 @@ package m2dl.mobe.challengemobe.gameplay;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
 
 /**
@@ -17,18 +17,20 @@ public class CarPlayer implements GameObject {
     private int positionX;
     private int color;
 
-    public CarPlayer(Bitmap car){
+    public CarPlayer(Bitmap car) {
         this.carBitmap = car;
+        System.out.println("car = " + car.getHeight() + " - " + car.getWidth());
         this.positionX = Constants.SCREEN_WIDTH / 2;
     }
 
-    public Bitmap getCarBitmap(){
+    public Bitmap getCarBitmap() {
         return carBitmap;
     }
 
     @Override
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
         paint.setAntiAlias(true);
         canvas.drawBitmap(carBitmap, null, position2Rect(), paint);
     }
@@ -38,15 +40,15 @@ public class CarPlayer implements GameObject {
 
     }
 
-    public void update(int positionX){
+    public void update(int positionX) {
         this.positionX = positionX;
     }
 
     public Rect position2Rect() {
         return new Rect(positionX,
-                Constants.SCREEN_HEIGHT - carBitmap.getHeight() - Y_OFFSET ,
-                positionX + carBitmap.getWidth(),
-                Constants.SCREEN_HEIGHT - Y_OFFSET - carBitmap.getHeight());
+                Constants.SCREEN_HEIGHT - carBitmap.getHeight() - Y_OFFSET,
+                Constants.SCREEN_WIDTH - positionX - carBitmap.getWidth(),
+                Y_OFFSET);
     }
 
 }
