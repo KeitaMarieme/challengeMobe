@@ -4,20 +4,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ValueAnimator;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-
-import java.lang.reflect.Array;
-import java.util.List;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView carView;
     private ImageView obstacle;
-
     private ImageView backgroundOne;
     private ImageView backgroundTwo;
+
+    private SensorManager sensorManager;
+    private Sensor lightSensor;
+    private SensorEventListener lightEventListener;
+
+    private float lightValue;
+    private float maxLightValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +35,33 @@ public class MainActivity extends AppCompatActivity {
         carView = findViewById(R.id.carView);
         obstacle = findViewById(R.id.obstacleView);
 
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        if (lightSensor == null) {
+            Toast.makeText(this,"The device has no light sensor!", Toast.LENGTH_SHORT);
+            finish();
+        }
+        maxLightValue = (int)(lightSensor.getMaximumRange());
+
+        lightEventListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent sensorEvent) {
+                lightValue = sensorEvent.values[0];
+                // between 0 and 255
+                int newValue = (int) (255f * lightValue / maxLightValue);
+                System.out.println("Light sensor value : " + newValue);
+                accelerate(newValue);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int i) { }
+        };
         initApp();
 
+    }
+
+    private void accelerate(float sensedValue) {
+        // TODO accelerer le défilement
     }
 
     private void initApp() {
