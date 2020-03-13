@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     private float lightValue;
     private float maxLightValue;
-    private float[] gyroscopeValue;
+    private float mSpeedBackground;
+    private float gyroscopeValue;
     private float maxGyroscopeValue;
 
     @Override
@@ -44,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         /** INIT LIGHT SENSOR **/
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         if (lightSensor == null) {
-            Toast.makeText(this,"The device has no light sensor!", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "The device has no light sensor!", Toast.LENGTH_SHORT);
             finish();
         }
-        maxLightValue = (int)(lightSensor.getMaximumRange());
+        maxLightValue = (int) (lightSensor.getMaximumRange());
 
         /** INIT GYROSCOPE SENSOR **/
         gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
@@ -63,10 +64,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (sensorEvent.sensor.getType()) {
                     case Sensor.TYPE_LIGHT :
                         lightValue = sensorEvent.values[0];
-                        // between 0 and 255
-                        int newValue = (int) (255f * lightValue / maxLightValue);
-                        System.out.println("Light sensor value : " + newValue);
-                        accelerate(newValue);
+                        float sensedValue = (2f * lightValue / maxLightValue);
+                        System.err.println("sensedValue = " + sensedValue);
+                        mSpeedBackground = sensedValue;
                         break;
                     case Sensor.TYPE_GYROSCOPE :
                         float x = sensorEvent.values[0];
@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAccuracyChanged(Sensor sensor, int i) { }
+            public void onAccuracyChanged(Sensor sensor, int i) {
+            }
         };
         /** REGISTER SENSORS IN SENSOR MANAGER + EVENT LISTENER **/
         sensorManager.registerListener(sensorEventListener, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -112,19 +113,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initApp() {
-         backgroundOne = findViewById(R.id.background_one);
-         backgroundTwo = findViewById(R.id.background_two);
+        mSpeedBackground = 0f;
+        backgroundOne = findViewById(R.id.background_one);
+        backgroundTwo = findViewById(R.id.background_two);
 
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
         animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(10000L);
+        animator.setDuration(5000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 final float progress = (float) animation.getAnimatedValue();
                 final float height = backgroundOne.getHeight();
-                final float translationY = height * progress;
+                final float translationY = mSpeedBackground * height * progress;
                 backgroundOne.setTranslationY(translationY);
                 backgroundTwo.setTranslationY(translationY - height);
             }
@@ -143,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         float height = size.y;
         xCoordinate = Math.random() * (width);
         yCoordinate = Math.random() * (height);
-        randomPoint.set((int)xCoordinate, (int) yCoordinate);
+        randomPoint.set((int) xCoordinate, (int) yCoordinate);
         return randomPoint;
     }
 }
