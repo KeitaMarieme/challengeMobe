@@ -22,7 +22,7 @@ public class LightEventListener implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         final int maxLightValue = (int) (lightSensor.getMaximumRange());
         if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
-            Constants.SPEED_LIGHT_RATIO = 0.5f + (event.values[0] / maxLightValue);
+            Constants.SPEED_LIGHT_RATIO = 1f + (event.values[0] / maxLightValue);
         }
     }
 
