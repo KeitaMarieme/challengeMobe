@@ -23,6 +23,7 @@ public class GamePlayScene {
     private long gameOverTime;
 
     private GyroscopeEventListener gyroscopeEventListener;
+    private LightEventListener lightEventListener;
     private long frameTime;
 
     public GamePlayScene(GamePanel gamePanel) {
@@ -34,6 +35,8 @@ public class GamePlayScene {
 
         gyroscopeEventListener = new GyroscopeEventListener();
         gyroscopeEventListener.register();
+        lightEventListener = new LightEventListener();
+        lightEventListener.register();
         frameTime = System.currentTimeMillis();
     }
 

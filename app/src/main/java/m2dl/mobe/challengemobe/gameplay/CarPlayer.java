@@ -6,10 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-/**
- * Created by Eric on 5/4/2017.
- */
-
 public class CarPlayer implements GameObject {
 
     public static final int Y_OFFSET = 20;

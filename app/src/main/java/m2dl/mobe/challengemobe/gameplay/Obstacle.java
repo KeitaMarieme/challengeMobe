@@ -4,10 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-/**
- * Created by Eric on 5/15/2017.
- */
-
 public class Obstacle implements GameObject{
 
     private Rect rectangle;
