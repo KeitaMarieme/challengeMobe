@@ -10,7 +10,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.animation.LinearInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -67,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (sensorEvent.sensor.getType()) {
                     case Sensor.TYPE_LIGHT :
                         lightValue = sensorEvent.values[0];
-                        float sensedValue = (2f * lightValue / maxLightValue);
-                        mSpeedBackground = sensedValue;
+                        mSpeedBackground = (lightValue / maxLightValue);
                         break;
                     case Sensor.TYPE_GYROSCOPE :
                         float x = sensorEvent.values[0];
@@ -117,22 +116,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initApp() {
-        mSpeedBackground = 0f;
+        mSpeedBackground = 0.01f;
         backgroundOne = findViewById(R.id.background_one);
         backgroundTwo = findViewById(R.id.background_two);
 
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+        final ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
         animator.setRepeatCount(ValueAnimator.INFINITE);
-        animator.setInterpolator(new LinearInterpolator());
+        animator.setInterpolator(new AccelerateInterpolator());
         animator.setDuration(5000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                final float progress = (float) animation.getAnimatedValue();
-                final float height = backgroundOne.getHeight();
-                final float translationY = mSpeedBackground * height * progress;
-                backgroundOne.setTranslationY(translationY);
-                backgroundTwo.setTranslationY(translationY - height);
+                int height = backgroundOne.getHeight();
+                final float translationY = (mSpeedBackground * 50) + backgroundOne.getTranslationY(); // nb de pixel qu'on défile
+                if (translationY >= height) {
+                    backgroundOne.setTranslationY(0);
+                    backgroundTwo.setTranslationY(-height);
+                } else {
+                    backgroundOne.setTranslationY(translationY);
+                    backgroundTwo.setTranslationY(translationY - height);
+                }
             }
         });
         animator.start();
