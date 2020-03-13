@@ -32,11 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private float gyroscopeValue;
     private float maxGyroscopeValue;
 
+    private int screenWidth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        screenWidth = getScreenWidth();
         carView = findViewById(R.id.carView);
         obstacle = findViewById(R.id.obstacleView);
 
@@ -65,14 +68,10 @@ public class MainActivity extends AppCompatActivity {
                     case Sensor.TYPE_LIGHT :
                         lightValue = sensorEvent.values[0];
                         float sensedValue = (2f * lightValue / maxLightValue);
-                        System.err.println("sensedValue = " + sensedValue);
                         mSpeedBackground = sensedValue;
                         break;
                     case Sensor.TYPE_GYROSCOPE :
                         float x = sensorEvent.values[0];
-                        float y = sensorEvent.values[1];
-                        float z = sensorEvent.values[2];
-                        System.out.println("Gyroscope sensor value : " + x + " " + y + " " + z);
                         moveCar(x);
                         break;
                     default:
@@ -104,12 +103,17 @@ public class MainActivity extends AppCompatActivity {
         sensorManager.unregisterListener(sensorEventListener);
     }
 
-    private void accelerate(float sensedValue) {
-        // TODO accelerer le défilement
-    }
-
     private void moveCar(float sensedValuedOnx) {
         // TODO bouger la voiture sur l'axe des x
+        float xOnScreenScale;
+        float multiplicator = 10000;
+        float translationValue = sensedValuedOnx*multiplicator;
+        if ((translationValue + carView.getTranslationX()) > screenWidth) {
+            translationValue = screenWidth - (translationValue + carView.getTranslationX());
+        } else if ((translationValue + carView.getTranslationX()) < (-1 * screenWidth)) {
+            translationValue = translationValue + carView.getTranslationX() + screenWidth;
+        }
+        carView.setTranslationX(translationValue);
     }
 
     private void initApp() {
@@ -147,5 +151,12 @@ public class MainActivity extends AppCompatActivity {
         yCoordinate = Math.random() * (height);
         randomPoint.set((int) xCoordinate, (int) yCoordinate);
         return randomPoint;
+    }
+
+    private int getScreenWidth() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
     }
 }
