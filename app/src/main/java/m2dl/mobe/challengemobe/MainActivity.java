@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView carView;
-    private ImageView obstacle;
     private ImageView backgroundOne;
     private ImageView backgroundTwo;
 
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         screenWidth = getScreenWidth();
         carView = findViewById(R.id.carView);
-        obstacle = findViewById(R.id.obstacleView);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
