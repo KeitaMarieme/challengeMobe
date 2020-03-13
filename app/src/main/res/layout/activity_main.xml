@@ -21,6 +21,12 @@
         android:src="@drawable/grass_template"/>
 
     <ImageView
+        android:id="@+id/obstacleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_close_black_24dp"/>
+
+    <ImageView
         android:id="@+id/carView"
         android:layout_width="104dp"
         android:layout_height="75dp"

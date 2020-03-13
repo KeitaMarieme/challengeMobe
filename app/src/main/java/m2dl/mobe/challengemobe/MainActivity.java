@@ -14,6 +14,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView carView;
+    private ImageView obstacle;
 
     private ImageView backgroundOne;
     private ImageView backgroundTwo;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         carView = findViewById(R.id.carView);
+        obstacle = findViewById(R.id.obstacleView);
 
         initApp();
 
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         animator.start();
     }
 
-    private Point getRandomCoordinate() {
+    private Point getRandomCoordinate() { // À TESTER
         Display screen = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         Point randomPoint = new Point();
@@ -64,44 +66,4 @@ public class MainActivity extends AppCompatActivity {
         randomPoint.set((int)xCoordinate, (int) yCoordinate);
         return randomPoint;
     }
-
-    /*
-    *
-
- Display display = getWindowManager().getDefaultDisplay();
- Point size = new Point();
- display.getSize(size);
- int width = size.x;
- int height = size.y;
- Log.e("Width", "" + width);
- Log.e("height", "" + height);*/
-
-    /*private void startGameRover(){
-        objectAnimator.setDuration(2000);
-        objectAnimator.setRepeatCount(Animation.INFINITE);
-        objectAnimator.start();
-    }*/
-
-    /*private void testinfiniteBackground() {
-        /*val display = context.getDisplayMetrics()
-        // % 18 because my tile size is 18px
-        // and to avoid partial crop when both image are joined together
-        val width = display.widthPixels + display.widthPixels % 18
-        background1ImageView.layoutParams.width = width
-        background2ImageView.layoutParams.width = width
-
-        // start animation
-        val animator = ValueAnimator.ofFloat(0.0f, 1.0f)
-        animator.repeatCount = ValueAnimator.INFINITE
-        animator.interpolator = LinearInterpolator()
-        animator.duration = 20000L // this will control speed of scrolling
-        animator.addUpdateListener { animation ->
-                val progress = animation.animatedValue as Float
-            val width = background1ImageView.getWidth()
-            val translationX = width * progress
-            background1ImageView.setTranslationX(translationX)
-            background2ImageView.setTranslationX(translationX - width)
-        }
-        animator.start()
-    }*/
 }
