@@ -16,6 +16,7 @@ public class ObstacleManager {
     private int obstacleHeight;
     private int color;
 
+
     private long startTime;
     private long initTime;
 

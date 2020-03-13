@@ -23,6 +23,7 @@ import android.widget.Toast;
 import m2dl.mobe.challengemobe.gameplay.Constants;
 
 public class MainActivity extends AppCompatActivity {
+
     private ImageView carView;
     private ImageView obstacle;
     private ImageView backgroundOne;

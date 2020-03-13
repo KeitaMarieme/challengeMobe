@@ -5,12 +5,16 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.widget.ImageView;
 
 public class OrientationData implements SensorEventListener {
 
     private SensorManager manager;
     private Sensor accelerometer;
     private Sensor magnometer;
+
+
+
 
     private float[] accelOutput;
     private float[] magOutput;
@@ -50,6 +54,10 @@ public class OrientationData implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+
+      //  manager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+
         if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
             accelOutput = event.values;
         else if(event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
