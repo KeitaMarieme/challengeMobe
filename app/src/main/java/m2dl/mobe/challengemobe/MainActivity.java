@@ -21,11 +21,15 @@ public class MainActivity extends AppCompatActivity {
     private ImageView backgroundTwo;
 
     private SensorManager sensorManager;
+    private SensorEventListener sensorEventListener;
+
     private Sensor lightSensor;
-    private SensorEventListener lightEventListener;
+    private Sensor gyroscopeSensor;
 
     private float lightValue;
     private float maxLightValue;
+    private float gyroscopeValue;
+    private float maxGyroscopeValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         obstacle = findViewById(R.id.obstacleView);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+        /** INIT LIGHT SENSOR **/
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         if (lightSensor == null) {
             Toast.makeText(this,"The device has no light sensor!", Toast.LENGTH_SHORT);
@@ -43,21 +49,53 @@ public class MainActivity extends AppCompatActivity {
         }
         maxLightValue = (int)(lightSensor.getMaximumRange());
 
-        lightEventListener = new SensorEventListener() {
+        /** INIT GYROSCOPE SENSOR **/
+        gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        if (gyroscopeSensor == null) {
+            Toast.makeText(this, "This device has no gyroscope!", Toast.LENGTH_SHORT);
+            finish();
+        }
+        maxGyroscopeValue = (int)gyroscopeSensor.getMaximumRange();
+
+        sensorEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
-                lightValue = sensorEvent.values[0];
-                // between 0 and 255
-                int newValue = (int) (255f * lightValue / maxLightValue);
-                System.out.println("Light sensor value : " + newValue);
-                accelerate(newValue);
+                switch (sensorEvent.sensor.getType()) {
+                    case Sensor.TYPE_LIGHT :
+                        lightValue = sensorEvent.values[0];
+                        // between 0 and 255
+                        int newValue = (int) (255f * lightValue / maxLightValue);
+                        System.out.println("Light sensor value : " + newValue);
+                        accelerate(newValue);
+                        break;
+                    case Sensor.TYPE_GYROSCOPE :
+                        break;
+                    default:
+                        break;
+                }
             }
 
             @Override
             public void onAccuracyChanged(Sensor sensor, int i) { }
         };
+        /** REGISTER SENSORS IN SENSOR MANAGER + EVENT LISTENER **/
+        sensorManager.registerListener(sensorEventListener, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(sensorEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
         initApp();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(sensorEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(sensorEventListener, gyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(sensorEventListener);
     }
 
     private void accelerate(float sensedValue) {
