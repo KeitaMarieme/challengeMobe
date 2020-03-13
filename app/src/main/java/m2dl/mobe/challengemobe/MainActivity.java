@@ -2,19 +2,18 @@ package m2dl.mobe.challengemobe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.graphics.Point;
 import android.os.Bundle;
-import android.view.View;
-import android.view.animation.Animation;
+import android.view.Display;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
-    private View backgroundView;
     private ImageView carView;
-    private ObjectAnimator objectAnimator;
 
     private ImageView backgroundOne;
     private ImageView backgroundTwo;
@@ -28,15 +27,13 @@ public class MainActivity extends AppCompatActivity {
 
         initApp();
 
-        // startGameRover();
-
     }
 
     private void initApp() {
-         backgroundOne = (ImageView) findViewById(R.id.background_one);
-         backgroundTwo = (ImageView) findViewById(R.id.background_two);
+         backgroundOne = findViewById(R.id.background_one);
+         backgroundTwo = findViewById(R.id.background_two);
 
-        final ValueAnimator animator = ValueAnimator.ofFloat(1.0f, 0.0f);
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
         animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.setInterpolator(new LinearInterpolator());
         animator.setDuration(10000L);
@@ -53,13 +50,39 @@ public class MainActivity extends AppCompatActivity {
         animator.start();
     }
 
-    private void startGameRover(){
+    private Point getRandomCoordinate() {
+        Display screen = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        Point randomPoint = new Point();
+        double xCoordinate;
+        double yCoordinate;
+        screen.getSize(size);
+        float width = size.x;
+        float height = size.y;
+        xCoordinate = Math.random() * (width);
+        yCoordinate = Math.random() * (height);
+        randomPoint.set((int)xCoordinate, (int) yCoordinate);
+        return randomPoint;
+    }
+
+    /*
+    *
+
+ Display display = getWindowManager().getDefaultDisplay();
+ Point size = new Point();
+ display.getSize(size);
+ int width = size.x;
+ int height = size.y;
+ Log.e("Width", "" + width);
+ Log.e("height", "" + height);*/
+
+    /*private void startGameRover(){
         objectAnimator.setDuration(2000);
         objectAnimator.setRepeatCount(Animation.INFINITE);
         objectAnimator.start();
-    }
+    }*/
 
-    private void testinfiniteBackground() {
+    /*private void testinfiniteBackground() {
         /*val display = context.getDisplayMetrics()
         // % 18 because my tile size is 18px
         // and to avoid partial crop when both image are joined together
@@ -79,6 +102,6 @@ public class MainActivity extends AppCompatActivity {
             background1ImageView.setTranslationX(translationX)
             background2ImageView.setTranslationX(translationX - width)
         }
-        animator.start()*/
-    }
+        animator.start()
+    }*/
 }

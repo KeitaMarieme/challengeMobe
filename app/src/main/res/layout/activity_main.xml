@@ -10,22 +10,24 @@
         android:id="@+id/background_one"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_rose_petals"/>
+        android:scaleType = "centerCrop"
+        android:src="@drawable/grass_template"/>
 
     <ImageView
         android:id="@+id/background_two"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_rose_petals"/>
+        android:scaleType = "centerCrop"
+        android:src="@drawable/grass_template"/>
 
     <ImageView
         android:id="@+id/carView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="104dp"
+        android:layout_height="75dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_icon" />
+        app:srcCompat="@drawable/ic_car_top_view_svgrepo_com" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
