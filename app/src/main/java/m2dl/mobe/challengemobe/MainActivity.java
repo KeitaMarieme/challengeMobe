@@ -3,9 +3,14 @@ package m2dl.mobe.challengemobe;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ValueAnimator;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
@@ -13,6 +18,9 @@ import java.lang.reflect.Array;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ObstacleManager obstacleManager;
+
     private ImageView carView;
     private ImageView obstacle;
 
@@ -21,17 +29,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        carView = findViewById(R.id.carView);
-        obstacle = findViewById(R.id.obstacleView);
+        //setContentView(R.layout.activity_main);
+        setContentView(new GamePanel(this));
 
-        initApp();
+        //for obstacle manager
+
+
+       // carView = findViewById(R.id.carView);
+      //  obstacle = findViewById(R.id.obstacleView);
+
+      //  initApp();
 
     }
 
-    private void initApp() {
+   /** private void initApp() {
+
          backgroundOne = findViewById(R.id.background_one);
          backgroundTwo = findViewById(R.id.background_two);
 
@@ -49,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
                 backgroundTwo.setTranslationY(translationY - height);
             }
         });
+
+
+      //  obstacleManager.draw();
         animator.start();
     }
 
@@ -66,4 +86,6 @@ public class MainActivity extends AppCompatActivity {
         randomPoint.set((int)xCoordinate, (int) yCoordinate);
         return randomPoint;
     }
+
+    **/
 }
